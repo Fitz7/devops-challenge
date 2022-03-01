@@ -29,3 +29,9 @@ resource "circleci_context_environment_variable" "terraform_region" {
   value      = "europe-west1"
   context_id = circleci_context.terraform.id
 }
+
+resource "circleci_context_environment_variable" "terraform_creds_file" {
+  variable   = "GOOGLE_APPLICATION_CREDENTIALS"
+  value      = "~/repo/terraform-deploy.json"
+  context_id = circleci_context.terraform.id
+}
