@@ -59,6 +59,7 @@ workflows:
     jobs:
       - gcp-gcr/build-and-push-image:
           context: container-pusher
+          docker-context: ./test-app
           path: ./test-app/build
           image: docker/test-app
           registry-url: europe-west1-docker.pkg.dev
