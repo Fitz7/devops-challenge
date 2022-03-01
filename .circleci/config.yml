@@ -4,22 +4,38 @@ orbs:
   gcp-gcr: circleci/gcp-gcr@0.14.1
   terraform: circleci/terraform@3.0.1
 
+jobs:
+  terraform-gcp-auth:
+    steps:
+      - checkout
+      - run:
+          name: gcp auth
+          command: echo $GCLOUD_SERVICE_KEY > terraform-deploy.json
+      - persist_to_workspace:
+          root: ~/repo
+          paths: terraform-deploy.json
+
 workflows:
   deploy_infrastructure:
     jobs:
+      - terraform-gcp-auth
       - terraform/fmt:
           checkout: true
           context: terraform
-          path: tf-faceit
+          path: tf-faceit          
+          requires:
+            - terraform-gcp-auth
       - terraform/validate:
           checkout: true
           context: terraform
+          attach-workspace: true
           path: tf-faceit
           requires:
             - terraform/fmt
       - terraform/plan:
           checkout: true
           context: terraform
+          attach-workspace: true
           persist-workspace: true
           path: tf-faceit
           requires:
@@ -40,7 +56,7 @@ workflows:
     jobs:
       - gcp-gcr/build-and-push-image:
           context: container-pusher
-          path: ./test-app/build/Dockerfile
+          path: ./test-app/build
           image: docker/test-app
           registry-url: europe-west1-docker.pkg.dev
           tag: $CIRCLE_SHA1
