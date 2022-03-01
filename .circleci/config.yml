@@ -5,7 +5,9 @@ orbs:
   terraform: circleci/terraform@3.0.1
 
 jobs:
-  terraform-gcp-auth:
+  terraform-gcp-auth:  
+    docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
       - run:
