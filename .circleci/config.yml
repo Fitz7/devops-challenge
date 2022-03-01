@@ -1,0 +1,46 @@
+version: 2.1
+
+orbs: 
+  gcp-gcr: circleci/gcp-gcr@0.14.1
+  terraform: circleci/terraform@3.0.1
+
+workflows:
+  deploy_infrastructure:
+    jobs:
+      - terraform/fmt:
+          checkout: true
+          context: terraform
+          path: tf-faceit
+      - terraform/validate:
+          checkout: true
+          context: terraform
+          path: tf-faceit
+          requires:
+            - terraform/fmt
+      - terraform/plan:
+          checkout: true
+          context: terraform
+          persist-workspace: true
+          path: tf-faceit
+          requires:
+            - terraform/validate
+      - approve-apply:
+          type: approval
+      - terraform/apply:
+          attach-workspace: true
+          context: terraform
+          path: tf-faceit
+          filters:
+            branches:
+              only: main
+          requires:
+            - terraform/plan
+            - approve-apply
+  build_and_push_image:
+    jobs:
+      - gcp-gcr/build-and-push-image:
+          context: container-pusher
+          path: ./test-app/build/Dockerfile
+          image: docker/test-app
+          registry-url: europe-west1-docker.pkg.dev
+          tag: $CIRCLE_SHA1
