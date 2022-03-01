@@ -7,13 +7,10 @@ orbs:
 workflows:
   deploy_infrastructure:
     jobs:
-      - terraform-gcp-auth
       - terraform/fmt:
           checkout: true
           context: terraform
-          path: tf-faceit          
-          requires:
-            - terraform-gcp-auth
+          path: tf-faceit
       - terraform/validate:
           checkout: true
           context: terraform
