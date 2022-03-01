@@ -12,3 +12,4 @@ you should then add it to your environment with
 ```
 export TF_VAR_circleci_api_token=YOURTOKEN
 ```
+you will also need to add this to the projects env vars in circleci as there is no nice way to get these tokens out of circleci

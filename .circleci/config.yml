@@ -4,20 +4,6 @@ orbs:
   gcp-gcr: circleci/gcp-gcr@0.14.1
   terraform: circleci/terraform@3.0.1
 
-jobs:
-  terraform-gcp-auth:
-    working_directory: ~/src
-    docker:
-      - image: cimg/base:2021.04
-    steps:
-      - checkout
-      - run:
-          name: gcp auth
-          command: echo $GCLOUD_SERVICE_KEY > terraform-deploy.json
-      - persist_to_workspace:
-          root: ~/src
-          paths: terraform-deploy.json
-
 workflows:
   deploy_infrastructure:
     jobs:

@@ -31,7 +31,7 @@ resource "circleci_context_environment_variable" "terraform_region" {
 }
 
 resource "circleci_context_environment_variable" "terraform_creds_file" {
-  variable   = "GOOGLE_APPLICATION_CREDENTIALS"
-  value      = "~/repo/terraform-deploy.json"
+  variable   = "GOOGLE_CREDENTIALS"
+  value      = base64decode(google_service_account_key.circleci_terraformer.private_key)
   context_id = circleci_context.terraform.id
 }
