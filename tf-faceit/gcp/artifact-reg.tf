@@ -18,6 +18,9 @@ module "artifact-registry-repository-iam-bindings" {
   bindings = {
     "roles/artifactregistry.writer" = [
       "serviceAccount:${var.circleci_container_pusher_sa_email}",
+    ],
+    "roles/artifactregistry.reader" = [
+      "serviceAccount:${google_service_account.kubernetes.email}",
     ]
   }
 }
