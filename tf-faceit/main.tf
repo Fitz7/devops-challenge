@@ -13,3 +13,9 @@ module "circleci" {
     circleci = circleci
   }
 }
+
+module "test-app" {
+  source = "./test-app"
+
+  faceit_project_id = local.faceit_project_id
+}

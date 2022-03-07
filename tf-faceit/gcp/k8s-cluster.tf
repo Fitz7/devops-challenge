@@ -45,23 +45,6 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
-data "google_client_config" "default" {}
-
-
-provider "kubernetes" {
-  host                   = "https://${google_container_cluster.primary.endpoint}"
-  token                  = data.google_client_config.default.access_token
-  cluster_ca_certificate = base64decode(google_container_cluster.primary.master_auth[0].cluster_ca_certificate)
-}
-
-resource "kubernetes_config_map" "example" {
-  metadata {
-    name = "my-config"
-  }
-
-  data = {
-    api_host = "myhost:443"
-    db_host  = "dbhost:5432"
-  }
-
+output "primary_cluster" {
+  value = google_container_cluster.primary
 }
