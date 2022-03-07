@@ -17,6 +17,9 @@ module "projects_iam_bindings" {
     # seems editor role is missing servicenetworking.services.addPeering
     "roles/servicenetworking.networksAdmin" = [
       "serviceAccount:${var.circleci_terraformer_sa_email}",
+    ],
+    "roles/iam.securityAdmin" = [
+      "serviceAccount:${var.circleci_terraformer_sa_email}",
     ]
     "roles/compute.instanceAdmin.v1" = [
       "serviceAccount:${google_service_account.kubernetes.email}"
