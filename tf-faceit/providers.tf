@@ -1,5 +1,6 @@
 provider "google" {
-  region = local.faceit_region
+  project = local.faceit_project_id
+  region  = local.faceit_region
 }
 
 provider "google-beta" {

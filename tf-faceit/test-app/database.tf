@@ -1,6 +1,5 @@
 data "google_compute_network" "network" {
   name    = "default"
-  project = var.faceit_project_id
 }
 
 resource "google_compute_global_address" "test_app_production" {
