@@ -14,6 +14,7 @@ module "projects_iam_bindings" {
       "serviceAccount:${data.google_compute_default_service_account.default.email}",
       "serviceAccount:${data.google_project.project.number}@cloudservices.gserviceaccount.com"
     ],
+    # seems editor role is missing servicenetworking.services.addPeering
     "roles/servicenetworking.networksAdmin" = [
       "serviceAccount:${var.circleci_terraformer_sa_email}",
     ]
