@@ -10,6 +10,7 @@ resource "google_service_account_iam_member" "test_app" {
 }
 
 resource "google_project_iam_member" "test_app" {
-  role   = "roles/cloudsql.client"
-  member = "serviceAccount:${google_service_account.test_app.email}"
+  project = var.faceit_project_id
+  role    = "roles/cloudsql.client"
+  member  = "serviceAccount:${google_service_account.test_app.email}"
 }
