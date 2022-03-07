@@ -1,9 +1,9 @@
 data "google_compute_network" "network" {
-  name    = "default"
+  name = "default"
 }
 
 resource "google_compute_global_address" "test_app_production" {
-  # provider = google-beta
+  provider = google-beta
 
   name          = "test-app-production"
   purpose       = "VPC_PEERING"
@@ -13,7 +13,7 @@ resource "google_compute_global_address" "test_app_production" {
 }
 
 resource "google_service_networking_connection" "test_app_production" {
-  # provider = google-beta
+  provider = google-beta
 
   network                 = data.google_compute_network.network.id
   service                 = "servicenetworking.googleapis.com"
