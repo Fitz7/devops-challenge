@@ -20,9 +20,13 @@ resource "google_service_networking_connection" "test_app_production" {
   reserved_peering_ranges = [google_compute_global_address.test_app_production.name]
 }
 
+resource "random_id" "test_app_production_suffix" {
+  byte_length = 4
+}
+
 
 resource "google_sql_database_instance" "test_app_production" {
-  name             = "test-app-production"
+  name             = "test-app-production-${random_id.test_app_production_suffix.hex}"
   database_version = "POSTGRES_11"
   region           = "europe-west1"
   depends_on       = [google_service_networking_connection.test_app_production]
