@@ -3,6 +3,7 @@ version: 2.1
 orbs: 
   gcp-gcr: circleci/gcp-gcr@0.14.1
   gcp-gke: circleci/gcp-gke@1.4.0
+  gcp-cli: circleci/gcp-cli@2.4.0
   terraform: circleci/terraform@3.0.1
   helm: circleci/helm@1.2.0
 
@@ -11,6 +12,8 @@ jobs:
     executor: gcp-gke/default
     steps:
       - checkout
+      - gcp-cli/install:
+          version: 376.0.0
       - gcp-gke/update-kubeconfig-with-credentials:
           cluster: primary
           perform-login: true
