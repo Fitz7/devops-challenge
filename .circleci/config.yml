@@ -14,6 +14,7 @@ jobs:
       - gcp-gke/update-kubeconfig-with-credentials:
           cluster: primary
           perform-login: true
+          install-kubectl: true
       - helm/upgrade-helm-chart:
           chart: ./test-app/deploy/chart
           helm-version: v3.8.0

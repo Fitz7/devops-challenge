@@ -9,7 +9,7 @@ resource "google_service_account_key" "k8s_releaser" {
 }
 
 resource "circleci_context" "k8s_releaser" {
-  name = "-k8s-releaser"
+  name = "k8s-releaser"
 }
 
 resource "circleci_context_environment_variable" "k8s_releaser_service_key" {
