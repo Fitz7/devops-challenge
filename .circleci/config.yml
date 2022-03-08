@@ -5,18 +5,19 @@ orbs:
   gcp-gke: circleci/gcp-gke@1.4.0
   terraform: circleci/terraform@3.0.1
   helm: circleci/helm@1.2.0
+
 jobs:
   upgrade_helm_release:
     executor: gcp-gke/default
     steps:
       - checkout
       - gcp-gke/update-kubeconfig-with-credentials:
-        cluster: primary
+          cluster: primary
       - helm/upgrade-helm-chart:
-        chart: ./test-app/deploy/chart
-        helm-version: v3.8.0
-        release-name: test-app
-        values-to-override: image.tag=$$CIRCLE_SHA1
+          chart: ./test-app/deploy/chart
+          helm-version: v3.8.0
+          release-name: test-app
+          values-to-override: image.tag=$$CIRCLE_SHA1
 
 workflows:
   deploy_infrastructure:
@@ -64,10 +65,10 @@ workflows:
       - approve_deploy:
           type: approval
       - upgrade_helm_release:
-        requires: 
-          - gcp-gcr/build-and-push-image
-          - approve_deploy
-      - gcp-gcr/tag-image:
+          requires: 
+            - gcp-gcr/build-and-push-image
+            - approve_deploy
+      - gcp-gcr/add-image-tag:
           context: container-pusher
           image: docker/test-app
           registry-url: europe-west1-docker.pkg.dev
