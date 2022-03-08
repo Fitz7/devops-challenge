@@ -1,25 +1,3 @@
-data "google_compute_network" "network" {
-  name = "default"
-}
-
-resource "google_compute_global_address" "test_app_production" {
-  provider = google-beta
-
-  name          = "test-app-production"
-  purpose       = "VPC_PEERING"
-  address_type  = "INTERNAL"
-  prefix_length = 16
-  network       = data.google_compute_network.network.id
-}
-
-resource "google_service_networking_connection" "test_app_production" {
-  provider = google-beta
-
-  network                 = data.google_compute_network.network.id
-  service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = [google_compute_global_address.test_app_production.name]
-}
-
 resource "random_id" "test_app_production_suffix" {
   byte_length = 4
 }
@@ -29,15 +7,10 @@ resource "google_sql_database_instance" "test_app_production" {
   name             = "test-app-production-${random_id.test_app_production_suffix.hex}"
   database_version = "POSTGRES_11"
   region           = "europe-west1"
-  depends_on       = [google_service_networking_connection.test_app_production]
 
+  deletion_protection = false
   settings {
     tier = "db-f1-micro"
-
-    ip_configuration {
-      ipv4_enabled    = false
-      private_network = data.google_compute_network.network.id
-    }
   }
 }
 
