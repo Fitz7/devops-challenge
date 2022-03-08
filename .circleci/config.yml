@@ -23,7 +23,7 @@ jobs:
           helm-version: v3.8.0
           release-name: test-app
           namespace: test-app
-          values-to-override: image.tag=$$CIRCLE_SHA1
+          values-to-override: image.tag=${CIRCLE_SHA1}
 
 workflows:
   deploy_infrastructure:
