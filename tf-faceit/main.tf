@@ -14,8 +14,9 @@ module "circleci" {
   }
 }
 
-module "test-app" {
+module "test_app" {
   source = "./test-app"
 
-  faceit_project_id = local.faceit_project_id
+  faceit_project_id  = local.faceit_project_id
+  test_app_namespace = module.gcp.test_app_namespace
 }

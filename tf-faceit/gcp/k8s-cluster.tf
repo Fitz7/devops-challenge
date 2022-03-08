@@ -45,6 +45,19 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
+resource "kubernetes_namespace" "test_app" {
+  depends_on = [
+    google_container_node_pool.primary_preemptible_nodes
+  ]
+  metadata {
+    name = "test-app"
+  }
+}
+
 output "primary_cluster" {
   value = google_container_cluster.primary
+}
+
+output "test_app_namespace" {
+  value = kubernetes_namespace.test_app.metadata[0].name
 }
