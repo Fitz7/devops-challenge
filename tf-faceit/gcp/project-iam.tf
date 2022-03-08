@@ -24,5 +24,8 @@ module "projects_iam_bindings" {
     "roles/compute.instanceAdmin.v1" = [
       "serviceAccount:${google_service_account.kubernetes.email}"
     ]
+    "roles/container.developer" = [
+      "serviceAccount:${var.circleci_k8s_releaser_sa_email}"
+    ]
   }
 }

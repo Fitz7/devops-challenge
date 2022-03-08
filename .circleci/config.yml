@@ -13,6 +13,7 @@ jobs:
       - checkout
       - gcp-gke/update-kubeconfig-with-credentials:
           cluster: primary
+          perform-login: true
       - helm/upgrade-helm-chart:
           chart: ./test-app/deploy/chart
           helm-version: v3.8.0
@@ -53,7 +54,7 @@ workflows:
           requires:
             - terraform/plan
             - approve_apply
-  build_and_push_image:
+  build_push_deploy_test_app:
     jobs:
       - gcp-gcr/build-and-push-image:
           context: container-pusher
@@ -65,6 +66,7 @@ workflows:
       - approve_deploy:
           type: approval
       - upgrade_helm_release:
+          context: k8s-releaser
           requires: 
             - gcp-gcr/build-and-push-image
             - approve_deploy
