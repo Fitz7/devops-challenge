@@ -19,13 +19,13 @@ type AppConfig struct {
 	PostgresPort     int    `envconfig:"POSTGRESQL_PORT" default:"5432"`
 	PostgresUser     string `envconfig:"POSTGRESQL_USER" default:"postgres"`
 	PostgresPassword string `envconfig:"POSTGRESQL_PASSWORD" default:"mysecretpassword"`
-	PostgresDbName   string `envconfig:"POSTGRESQL_DBNAME" default:"postgres"`
+	PostgresDBName   string `envconfig:"POSTGRESQL_DBNAME" default:"postgres"`
 }
 
 func (cfg *AppConfig) GetPostgresDSN() string {
 	return fmt.Sprintf(
 		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		cfg.PostgresHost, cfg.PostgresPort, cfg.PostgresUser, cfg.PostgresPassword, cfg.PostgresDbName,
+		cfg.PostgresHost, cfg.PostgresPort, cfg.PostgresUser, cfg.PostgresPassword, cfg.PostgresDBName,
 	)
 }
 
