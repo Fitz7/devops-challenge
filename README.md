@@ -1,3 +1,63 @@
+# How to run this project
+
+## Creating the google project
+This assumes you have all permissions required in a gcp org to create the necessary resources
+
+You will need to have some environment variables set up for your billing account and org id that is going to own the projects
+Also some service accounts for the admin project and the bucket that holds the terraform state
+
+```
+export TF_VAR_org_id=YOURGOOGLEORGID
+export TF_VAR_billing_account=YOURBILLINGACCOUNTID
+export GOOGLE_ADMIN_ACCOUNT=YOURGOOGLEADMINPROJECTID
+export GOOGLE_ADMIN_TERRAFORM_BUCKET=NAMEOFTERRAFORMSTATEBUCKET
+```
+
+You will also need to create a bucket with
+
+`gsutil mb -p ${GOOGLE_ADMIN_ACCOUNT} gs://${GOOGLE_ADMIN_TERRAFORM_BUCKET}`
+
+you will then be able to run
+```
+cd tf-project
+terraform plan
+```
+the plan should only show the creation of a new project and you can then
+```
+terraform apply
+```
+
+## Deploying infrastructure
+
+### Project set up
+
+You will need to create a bucket manually before you begin terraforming to hold the terraform state
+
+`gsutil mb -p faceit3e0aff1e gs://fitz-faceit-terraform` (choose a new bucket name)
+
+once this project has been created you should update the project id to in `./tf-faceit/locals.tf` to the newly created project
+### CircleCI Setup
+
+To set up the CircleCI provider you will need an API token from https://app.circleci.com/settings/user/tokens
+
+you should then add it to your environment with
+```
+export TF_VAR_circleci_api_token=YOURTOKEN
+```
+you will also need to add this to this circleCI projects environment variables in circleci as there is no nice way to get these user tokens out of circleci
+
+to do this go to https://app.circleci.com/settings/project/github/Fitz7/devops-challenge/environment-variables (but replace Fitz7 with your user or org)
+
+### First terraform run
+
+The project will need to be set up from the tf-faceit folder locally first by running `terraform apply` before it can be run in CI due to the environment variables in CI being terraformed
+
+Once the project is set up everything should be able to run and update application from CI
+
+
+
+***
+
 # FACEIT DevOps Challenge
 
 You have been asked to create the infrastructure for running a web application on a cloud platform of your preference (Google Cloud Platform preferred, AWS or Azure are also fine).
