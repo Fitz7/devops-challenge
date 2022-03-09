@@ -41,7 +41,7 @@ resource "google_compute_health_check" "test_app" {
   timeout_sec        = 1
 
   http_health_check {
-    request_path       = "/status/ready"
+    request_path       = "/health"
     port_specification = "USE_SERVING_PORT"
   }
 }
