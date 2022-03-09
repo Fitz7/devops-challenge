@@ -54,13 +54,15 @@ The project will need to be set up from the tf-faceit folder locally first by ru
 
 Once the project is set up everything should be able to run and update application from CI
 
-### Updating the test-app database value
+## Deploying the app
 
 The final step would be to visit `./test-app/deploy/chart/values.yaml` and update the instanceConnectionName as it contains a randomised suffix
 
 You should be able to find this random suffix by using `gcloud sql instances list`
 
+## Finally
 
+Once the app and the infrastructure are deployed we can expose the app via a load balancer, uncommenting the code in `./tf-faceit/test-app/load-balancer.tf` and applying through CI will set up a load balancer allowing us to visit the healthcheck of the app via a global ip address
 
 ***
 
