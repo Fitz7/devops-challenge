@@ -14,7 +14,7 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 envSecret: test-app
-instanceConnectionName: faceit3e0aff1e:europe-west1:test-app-production-074cf6a4
+instanceConnectionName: faceit3e0aff1e:europe-west1:test-app-production-b47d80b1
 
 serviceAccount:
   # Specifies whether a service account should be created

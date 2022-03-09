@@ -54,6 +54,12 @@ The project will need to be set up from the tf-faceit folder locally first by ru
 
 Once the project is set up everything should be able to run and update application from CI
 
+### Updating the test-app database value
+
+The final step would be to visit `./test-app/deploy/chart/values.yaml` and update the instanceConnectionName as it contains a randomised suffix
+
+You should be able to find this random suffix by using `gcloud sql instances list`
+
 
 
 ***
