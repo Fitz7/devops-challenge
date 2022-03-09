@@ -20,4 +20,6 @@ module "test_app" {
 
   faceit_project_id  = local.faceit_project_id
   test_app_namespace = module.gcp.test_app_namespace
+  network            = module.gcp.network_id
+  subnet             = module.gcp.eu_west1_01_subnet_id
 }

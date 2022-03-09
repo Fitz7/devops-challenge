@@ -9,6 +9,14 @@ resource "google_container_cluster" "primary" {
   name     = "primary"
   location = "europe-west1"
 
+  network    = module.vpc.network_id
+  subnetwork = module.vpc.subnets["${local.eu_west1_01_subnet_region}/${local.eu_west1_01_subnet_name}"].id
+
+  ip_allocation_policy {
+    cluster_secondary_range_name  = local.pods_range_name
+    services_secondary_range_name = local.services_range_name
+  }
+
   remove_default_node_pool = true
   initial_node_count       = 1
 

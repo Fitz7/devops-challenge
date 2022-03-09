@@ -17,10 +17,11 @@ resource "random_id" "id" {
 }
 
 resource "google_project" "project" {
-  name            = local.faceit_project_name
-  project_id      = random_id.id.hex
-  billing_account = var.billing_account
-  org_id          = var.org_id
+  name                = local.faceit_project_name
+  project_id          = random_id.id.hex
+  billing_account     = var.billing_account
+  org_id              = var.org_id
+  auto_create_network = false
 }
 
 output "faceit_project_id" {
